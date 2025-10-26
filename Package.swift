@@ -5,22 +5,34 @@ import PackageDescription
 
 let package = Package(
     name: "DocCMarkup",
+    platforms: [.macOS(.v13)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "DocCMarkup",
             targets: ["DocCMarkup"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.0-latest"),
+        .package(url: "https://github.com/swiftlang/swift-markdown.git", branch: "main"),
+        .package(url: "https://github.com/swiftlang/swift-docc-symbolkit.git", branch: "main"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.18.6"),
+    ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "DocCMarkup"
+            name: "DocCMarkup",
+            dependencies: [
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SymbolKit", package: "swift-docc-symbolkit"),
+                .product(name: "Markdown", package: "swift-markdown"),
+            ]
         ),
         .testTarget(
             name: "DocCMarkupTests",
-            dependencies: ["DocCMarkup"]
+            dependencies: [
+                "DocCMarkup",
+                .product(name: "InlineSnapshotTesting", package: "swift-snapshot-testing"),
+            ]
         ),
     ]
 )
