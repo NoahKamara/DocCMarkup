@@ -277,7 +277,7 @@ struct ParsingTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "returns" : [
                   [
                     "some return type"
@@ -305,7 +305,7 @@ struct ParsingTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "returns" : [
                   [
                     "some return type\nsome more text?"
