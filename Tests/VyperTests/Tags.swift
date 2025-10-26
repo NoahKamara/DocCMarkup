@@ -1,8 +1,7 @@
 //
-//  File.swift
-//  Vyper
+//  Tags.swift
 //
-//  Created by Noah Kamara on 12.09.2025.
+//  Copyright © 2024 Noah Kamara.
 //
 
 import Testing

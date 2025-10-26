@@ -53,7 +53,7 @@ public struct TaggedComponents: MarkupRewriter {
     init() {}
 
     // MARK: Markup Rewriter
-    
+
     public mutating func visitDocument(_ document: Document) -> (any Markup)? {
         // First, visit all markup to extract tags
         let processedDocument = Document(document.children

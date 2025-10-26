@@ -131,7 +131,7 @@ struct RouterMacroParseTests {
     }
 }
 
-fileprivate func parseRoute(_ source: String) throws -> RouteDescriptor {
+private func parseRoute(_ source: String) throws -> RouteDescriptor {
     enum SetupError: Error {
         case syntaxParser
         case apiParser

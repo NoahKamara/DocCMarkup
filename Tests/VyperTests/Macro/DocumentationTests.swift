@@ -55,7 +55,7 @@ struct DocumentationTests {
                 func list() -> Response {
                     Response(statusCode: 200)
                 }
-            
+
                 /// Lorem ipsum dolor sit amet.
                 @POST
                 func create() -> Response {
@@ -141,7 +141,7 @@ struct DocumentationTests {
 //                func list() -> Response {
 //                    Response(statusCode: 200)
 //                }
-//            
+//
 //                /// Lorem ipsum dolor sit amet.
 //                @POST
 //                func create() -> Response {
@@ -157,14 +157,14 @@ struct DocumentationTests {
 //                func list() -> Response {
 //                    Response(statusCode: 200)
 //                }
-//            
+//
 //                /// Lorem ipsum dolor sit amet.
 //                @POST
 //                func create() -> Response {
 //                    Response(statusCode: 201)
 //                }
 //            }
-//            
+//
 //            extension TestController: RouteCollection {
 //                func boot(routes: any RoutesBuilder) throws {
 //                    routes.on(.GET) { request in

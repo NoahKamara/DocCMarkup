@@ -28,7 +28,7 @@ struct RoutingOptionTests {
 //                @GET
 //                func list() -> Response {}
 //            }
-//            
+//
 //            extension TestController: RouteCollection {
 //                func boot(routes: any RoutesBuilder) throws {
 //                    routes.on(.GET) { request in
@@ -55,7 +55,7 @@ struct RoutingOptionTests {
 //                @GET
 //                func list() {}
 //            }
-//            
+//
 //            extension TestController: RouteCollection {
 //                func boot(routes: any RoutesBuilder) throws {
 //                    routes.on(.GET) { request in
@@ -87,7 +87,7 @@ struct RoutingOptionTests {
 //                @GET
 //                func list() -> Response {}
 //            }
-//            
+//
 //            extension TestController: RouteCollection {
 //                func boot(routes: any RoutesBuilder) throws {
 //                    routes.on(.GET) { request in
@@ -114,7 +114,7 @@ struct RoutingOptionTests {
 //                @GET
 //                func list() {}
 //            }
-//            
+//
 //            extension TestController: RouteCollection {
 //                func boot(routes: any RoutesBuilder) throws {
 //                    routes.on(.GET) { request in
