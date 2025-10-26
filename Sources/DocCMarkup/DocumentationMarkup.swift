@@ -39,8 +39,8 @@ public struct DocumentationMarkup {
     ///
     /// The cases in this enumeration are sorted in the order sections are expected to appear in the
     /// documentation markup.
-    public enum ParserSection: Int, Comparable {
-        public static func < (lhs: ParserSection, rhs: ParserSection) -> Bool {
+    public enum ParseSection: Int, Comparable {
+        public static func < (lhs: ParseSection, rhs: ParseSection) -> Bool {
             lhs.rawValue < rhs.rawValue
         }
 
@@ -58,19 +58,19 @@ public struct DocumentationMarkup {
     public private(set) var discussionSection: DiscussionSection?
 
     /// The documentation tags, if found.
-    public private(set) var discussionTags: TaggedComponents?
+    public private(set) var tags: TaggedComponents?
 
     // MARK: - Initialize and parse the markup
 
     /// Initialize a documentation model with the given markup.
     /// - Parameters:
     ///   - markup: The source markup.
-    ///   - parseUpToSection: Documentation past this section will be ignored.
-    init(markup: any Markup, upToSection lastSection: ParserSection = .end) {
+    ///   - upToSection: Documentation past this section will be ignored.
+    public init(markup: any Markup, upToSection lastSection: ParseSection = .end) {
         self.markup = markup
 
         // The current documentation section being parsed.
-        var currentSection = ParserSection.abstract
+        var currentSection = ParseSection.abstract
 
         // Tracking the start index of discussion section.
         var discussionIndex: Int?
@@ -137,7 +137,7 @@ public struct DocumentationMarkup {
                         tags
                     ) = parseDiscussion(markup.children(at: discussionIndex...index))
                     self.discussionSection = discussion
-                    self.discussionTags = tags
+                    self.tags = tags
                 }
             }
         }
@@ -146,38 +146,28 @@ public struct DocumentationMarkup {
 
 // MARK: - Convenience Markup extensions
 
-fileprivate extension Markup {
+private extension Markup {
     /// Returns a sub-sequence of the children sequence.
     /// - Parameter range: A closed range.
     /// - Returns: A children sub-sequence.
     func children(at range: ClosedRange<Int>) -> [any Markup] {
-        var iterator = self.children.makeIterator()
-        var counter = 0
-        var result = [any Markup]()
-
-        while let next = iterator.next() {
-            defer { counter += 1 }
-            guard counter <= range.upperBound else { break }
-            guard counter >= range.lowerBound else { continue }
-            result.append(next)
-        }
-        return result
+        let array = Array(self.children)
+        guard !array.isEmpty else { return [] }
+        let lower = max(range.lowerBound, 0)
+        let upper = min(range.upperBound, array.count - 1)
+        guard lower <= upper else { return [] }
+        return Array(array[lower...upper])
     }
 
     /// Returns a sub-sequence of the children sequence.
     /// - Parameter range: A half-closed range.
     /// - Returns: A children sub-sequence.
     func children(at range: Range<Int>) -> [any Markup] {
-        var iterator = self.children.makeIterator()
-        var counter = 0
-        var result = [any Markup]()
-
-        while let next = iterator.next() {
-            defer { counter += 1 }
-            guard counter < range.upperBound else { break }
-            guard counter >= range.lowerBound else { continue }
-            result.append(next)
-        }
-        return result
+        let array = Array(self.children)
+        guard !array.isEmpty else { return [] }
+        let lower = max(range.lowerBound, 0)
+        let upper = min(range.upperBound, array.count)
+        guard lower < upper else { return [] }
+        return Array(array[lower..<upper])
     }
 }

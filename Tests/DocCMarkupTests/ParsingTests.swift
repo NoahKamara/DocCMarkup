@@ -1,13 +1,13 @@
 //
-//  DocumentationTests.swift
+//  ParsingTests.swift
 //
 //  Copyright © 2024 Noah Kamara.
 //
 
-import InlineSnapshotTesting
-import Testing
-import SwiftSyntax
 @testable import DocCMarkup
+import InlineSnapshotTesting
+import SwiftSyntax
+import Testing
 
 @Suite("Parsing")
 struct ParsingTests {
@@ -48,13 +48,12 @@ struct ParsingTests {
         }
     }
 
-
     @Test
     func abstract() {
         let markup = DocumentationMarkup(
             parsing: """
-                Lorem ipsum dolor sit amet.
-                """
+            Lorem ipsum dolor sit amet.
+            """
         )
 
         assertInlineSnapshot(of: markup, as: .json) {
@@ -72,10 +71,10 @@ struct ParsingTests {
     func discussion() {
         let markup = DocumentationMarkup(
             parsing: """
-                Lorem ipsum dolor sit amet.
+            Lorem ipsum dolor sit amet.
 
-                Some Discussion
-                """
+            Some Discussion
+            """
         )
 
         assertInlineSnapshot(of: markup, as: .json) {
@@ -87,7 +86,7 @@ struct ParsingTests {
               "discussionSection" : [
                 "Some Discussion"
               ],
-              "discussionTags" : {
+              "tags" : {
 
               }
             }
@@ -99,10 +98,10 @@ struct ParsingTests {
     func parameters() {
         let markup = DocumentationMarkup(
             parsing: """
-                - Parameters:
-                    - foo: foo parameter.
-                    - bar: bar parameter.
-                """
+            - Parameters:
+                - foo: foo parameter.
+                - bar: bar parameter.
+            """
         )
 
         assertInlineSnapshot(of: markup, as: .json) {
@@ -111,7 +110,7 @@ struct ParsingTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "parameters" : [
                   {
                     "contents" : [
@@ -138,8 +137,8 @@ struct ParsingTests {
     func standaloneParameter() async throws {
         let documentation = DocumentationMarkup(
             parsing: """
-                - Parameter parameterName: a parameter name
-                """
+            - Parameter parameterName: a parameter name
+            """
         )
 
         assertInlineSnapshot(of: documentation, as: .json) {
@@ -148,7 +147,7 @@ struct ParsingTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "parameters" : [
                   {
                     "contents" : [
@@ -168,10 +167,10 @@ struct ParsingTests {
     func multipleStandaloneParameter() async throws {
         let documentation = DocumentationMarkup(
             parsing: """
-                Lorem ipsum dolor sit amet.
-                - Parameter bar: describing bar parameter
-                - Parameter baz: describing baz parameter
-                """
+            Lorem ipsum dolor sit amet.
+            - Parameter bar: describing bar parameter
+            - Parameter baz: describing baz parameter
+            """
         )
 
         assertInlineSnapshot(of: documentation, as: .json) {
@@ -183,7 +182,7 @@ struct ParsingTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "parameters" : [
                   {
                     "contents" : [
@@ -211,8 +210,8 @@ struct ParsingTests {
         let documentation = DocumentationMarkup(
             parsing: """
 
-                - Throws: some error
-                """
+            - Throws: some error
+            """
         )
 
         assertInlineSnapshot(of: documentation, as: .json) {
@@ -221,7 +220,7 @@ struct ParsingTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "throws" : [
                   [
                     "some error"
@@ -238,9 +237,9 @@ struct ParsingTests {
         let documentation = DocumentationMarkup(
             parsing: """
 
-                - Throws: some error
-                - Throws: some other error
-                """
+            - Throws: some error
+            - Throws: some other error
+            """
         )
 
         assertInlineSnapshot(of: documentation, as: .json) {
@@ -249,7 +248,7 @@ struct ParsingTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "throws" : [
                   [
                     "some error"
@@ -268,8 +267,8 @@ struct ParsingTests {
     func returns() async throws {
         let documentation = DocumentationMarkup(
             parsing: """
-                - Returns: some return type
-                """
+            - Returns: some return type
+            """
         )
 
         assertInlineSnapshot(of: documentation, as: .json) {
@@ -294,10 +293,10 @@ struct ParsingTests {
     func multipleReturnsStatement() async throws {
         let documentation = DocumentationMarkup(
             parsing: """
-                - Returns: some return type
-                some more text?
-                - Returns: some other return type
-                """
+            - Returns: some return type
+            some more text?
+            - Returns: some other return type
+            """
         )
 
         assertInlineSnapshot(of: documentation, as: .json) {

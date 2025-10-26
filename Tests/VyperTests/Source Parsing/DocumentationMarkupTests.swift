@@ -59,7 +59,7 @@ struct DocumentationMarkupTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "parameters" : [
                   {
                     "contents" : [
@@ -92,7 +92,7 @@ struct DocumentationMarkupTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "parameters" : [
                   {
                     "contents" : [
@@ -128,7 +128,7 @@ struct DocumentationMarkupTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "parameters" : [
                   {
                     "contents" : [
@@ -158,7 +158,7 @@ struct DocumentationMarkupTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "parameters" : [
                   {
                     "contents" : [
@@ -194,7 +194,7 @@ struct DocumentationMarkupTests {
               "discussionSection" : [
 
               ],
-              "discussionTags" : {
+              "tags" : {
                 "throws" : [
                   [
                     "some error"

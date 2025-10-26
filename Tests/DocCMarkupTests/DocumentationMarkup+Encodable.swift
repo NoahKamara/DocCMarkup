@@ -1,10 +1,8 @@
 //
-//  CodingKeys.swift
-//  DocCMarkup
+//  DocumentationMarkup+Encodable.swift
 //
-//  Created by Noah Kamara on 26.10.2025.
+//  Copyright © 2024 Noah Kamara.
 //
-
 
 //
 //  DocumentationMarkup+Codable.swift
@@ -14,15 +12,16 @@
 
 import Foundation
 
+@testable import DocCMarkup
+
 // import Markdown
 import SymbolKit
-@testable import DocCMarkup
 
 extension DocumentationMarkup: Encodable {
     private enum CodingKeys: String, CodingKey {
         case abstractSection
         case discussionSection
-        case discussionTags
+        case tags
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -30,7 +29,7 @@ extension DocumentationMarkup: Encodable {
 
         try container.encodeIfPresent(abstractSection, forKey: .abstractSection)
         try container.encodeIfPresent(discussionSection, forKey: .discussionSection)
-        try container.encodeIfPresent(discussionTags, forKey: .discussionTags)
+        try container.encodeIfPresent(tags, forKey: .tags)
     }
 }
 
