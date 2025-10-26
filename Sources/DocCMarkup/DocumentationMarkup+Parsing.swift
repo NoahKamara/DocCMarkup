@@ -51,7 +51,7 @@ public extension DocumentationMarkup {
             let processed = lines.map { line -> String in
                 var s = String(line)
                 // Trim leading spaces/tabs
-                s.removePrefix(where: { $0 == " " || $0 == "\t" })
+                s.trimPrefix(while: { $0.isWhitespace })
                 if s.first == "*" {
                     s.removeFirst()
                     if let first = s.first, first == " " || first == "\t" {
