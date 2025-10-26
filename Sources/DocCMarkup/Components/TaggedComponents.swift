@@ -20,12 +20,11 @@ private let simpleListItemTags = [
     "copyright",
     "date",
     "experiment",
-    "important",
+    // asides handled specially at top-level: note, important, warning, tip, seealso
     "invariant",
     "localizationkey",
     "mutatingvariant",
     "nonmutatingvariant",
-    "note",
     "postcondition",
     "precondition",
     "remark",
@@ -33,25 +32,23 @@ private let simpleListItemTags = [
     "returns",
     "throws",
     "requires",
-    "seealso",
     "since",
     "tag",
     "todo",
     "version",
-    "warning",
     "keyword",
     "recommended",
     "recommendedover",
 ]
 
 public struct TaggedComponents: MarkupRewriter {
-    var parameters = [Parameter]()
-    var httpResponses = [HTTPResponse]()
-    var httpParameters = [HTTPParameter]()
-    var httpBody: HTTPBody?
-    var returns = [Return]()
-    var `throws` = [Throw]()
-    var otherTags = [SimpleTag]()
+    public private(set) var parameters = [Parameter]()
+    public private(set) var httpResponses = [HTTPResponse]()
+    public private(set) var httpParameters = [HTTPParameter]()
+    public private(set) var httpBody: HTTPBody?
+    public private(set) var returns = [Return]()
+    public private(set) var `throws` = [Throw]()
+    public private(set) var otherTags = [SimpleTag]()
 
     init() {}
 
@@ -74,10 +71,11 @@ public struct TaggedComponents: MarkupRewriter {
             }
 
             // Separate all the "- Note:" elements from the other list items.
-            let (noteItems, otherListItems) = unorderedList.listItems
+            let asideNames: Set<String> = ["note", "important", "warning", "tip", "seealso"]
+            let (asideItems, otherListItems) = unorderedList.listItems
                 .categorize(where: { item -> [any BlockMarkup]? in
                     guard let tagName = item.extractTag()?.rawTag.lowercased(),
-                          ["note"].contains(tagName) // Simplified to just check for "note"
+                          asideNames.contains(tagName)
                     else {
                         return nil
                     }
@@ -88,8 +86,8 @@ public struct TaggedComponents: MarkupRewriter {
             result.append(UnorderedList(otherListItems))
 
             // Then, add the Note asides as siblings after the list they belonged to
-            for noteDescription in noteItems {
-                result.append(BlockQuote(noteDescription))
+            for asideDescription in asideItems {
+                result.append(BlockQuote(asideDescription))
             }
         }
 
