@@ -17,8 +17,7 @@ Add the package to your `Package.swift` or through Xcode:
 
 ```swift
 dependencies: [
-    // Use the repository URL of this project
-    .package(url: "<repo-url>", branch: "main")
+    .package(url: "https://github.com/noahkamara/DocCMarkup", branch: "main")
 ],
 targets: [
     .target(
@@ -28,15 +27,8 @@ targets: [
 ]
 ```
 
-Alternatively, for local development:
-
-```swift
-dependencies: [
-    .package(path: "../DocCMarkup")
-]
-```
-
 ### Usage
+
 Minimal examples to get started. The public API is intentionally small; more docs and surface area will come later.
 
 Parse from a plain Markdown string:
@@ -76,17 +68,10 @@ let doc = DocumentationMarkup(trivia: trivia)
 let abstract = doc.abstractSection?.content
 ```
 
-> Notes
-- The tag container exists, but most tag collections are not fully exposed as public yet; the API may evolve.
-- Keep examples small; full DocC-style documentation will be provided in a future iteration.
-
 ### Running Tests
 
 ```bash
 swift test
 ```
-
-### License
-Copyright © 2024 Noah Kamara.
 
 
