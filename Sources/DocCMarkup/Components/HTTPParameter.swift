@@ -16,7 +16,7 @@ public struct HTTPParameter {
     /// Value might be undefined initially when first extracted from markdown.
     public var source: String?
     /// The content that describe the parameter.
-    public var contents: [any Markup]
+    public var contents: [String]
     /// The symbol graph symbol representing this parameter.
     public var symbol: SymbolGraph.Symbol?
     /// The required status of the parameter.
@@ -39,7 +39,7 @@ public struct HTTPParameter {
     ) {
         self.name = name
         self.source = source
-        self.contents = contents
+        self.contents = contents.map { $0.format() }
         self.symbol = symbol
         self.required = required
     }

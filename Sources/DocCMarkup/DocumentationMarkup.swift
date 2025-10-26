@@ -32,9 +32,6 @@ import SwiftSyntax
 /// A discussion that may contain further level-3 sub-sections, text, images, etc.
 /// ```
 public struct DocumentationMarkup {
-    /// The original markup.
-    private let markup: any Markup
-
     /// The various sections that are expected in documentation markup.
     ///
     /// The cases in this enumeration are sorted in the order sections are expected to appear in the
@@ -67,8 +64,6 @@ public struct DocumentationMarkup {
     ///   - markup: The source markup.
     ///   - upToSection: Documentation past this section will be ignored.
     public init(markup: any Markup, upToSection lastSection: ParseSection = .end) {
-        self.markup = markup
-
         // The current documentation section being parsed.
         var currentSection = ParseSection.abstract
 
@@ -118,7 +113,10 @@ public struct DocumentationMarkup {
                     []
                 }
 
-                return (discussion: DiscussionSection(content: content), tags: extractor)
+                return (
+                    discussion: DiscussionSection(content: content),
+                    tags: extractor
+                )
             }
 
             // Parse a discussion, if found

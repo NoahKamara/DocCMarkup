@@ -15,7 +15,7 @@ public struct SimpleTag {
     public var tag: String
 
     /// The tagged content.
-    public var contents: [any Markup]
+    public var contents: [String]
 
     /// Creates a new tagged piece of documentation from the given name and content.
     ///
@@ -24,6 +24,6 @@ public struct SimpleTag {
     ///   - contents: The tagged content.
     public init(tag: String, contents: [any Markup]) {
         self.tag = tag
-        self.contents = contents
+        self.contents = contents.map { $0.format() }
     }
 }

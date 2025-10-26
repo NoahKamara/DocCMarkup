@@ -32,8 +32,6 @@ extension AbstractSection: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
 
-        // Convert Markup to serializable content
-        let content = content.map { $0.format() }
         try container.encode(content)
     }
 }
@@ -43,7 +41,6 @@ extension AbstractSection: Encodable {
 extension DiscussionSection: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        let content = content.map { $0.format() }
         try container.encode(content)
     }
 }
@@ -95,7 +92,6 @@ extension Parameter: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         try container.encode(name, forKey: .name)
-        let contents = contents.map { $0.format() }
         try container.encode(contents, forKey: .contents)
         // Note: SourceRange is not Codable, so we skip encoding these properties
         // try container.encodeIfPresent(nameRange, forKey: .nameRange)
@@ -112,7 +108,6 @@ extension Return: Encodable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        let contents = contents.map { $0.format() }
         try container.encode(contents)
     }
 }
@@ -120,7 +115,6 @@ extension Return: Encodable {
 extension Throw: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        let contents = contents.map { $0.format() }
         try container.encode(contents)
     }
 }
@@ -138,7 +132,6 @@ extension HTTPBody: Encodable {
 
         try container.encodeIfPresent(mediaType, forKey: .mediaType)
         try container.encode(parameters, forKey: .parameters)
-        let contents = contents.map { $0.format() }
         try container.encode(contents, forKey: .contents)
         // Note: SymbolGraph.Symbol is not Codable, so we skip encoding this property
         // try container.encodeIfPresent(symbol, forKey: .symbol)
@@ -159,7 +152,6 @@ extension HTTPParameter: Encodable {
 
         try container.encode(name, forKey: .name)
         try container.encodeIfPresent(source, forKey: .source)
-        let contents = contents.map { $0.format() }
         try container.encode(contents, forKey: .contents)
         // Note: SymbolGraph.Symbol is not Codable, so we skip encoding this property
         // try container.encodeIfPresent(symbol, forKey: .symbol)
@@ -182,7 +174,6 @@ extension HTTPResponse: Encodable {
         try container.encode(statusCode, forKey: .statusCode)
         try container.encodeIfPresent(reason, forKey: .reason)
         try container.encodeIfPresent(mediaType, forKey: .mediaType)
-        let contents = contents.map { $0.format() }
         try container.encode(contents, forKey: .contents)
         // Note: SymbolGraph.Symbol is not Codable, so we skip encoding this property
         try container.encodeIfPresent(symbol?.kind.identifier.identifier, forKey: .symbol)
@@ -199,7 +190,6 @@ extension SimpleTag: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         try container.encode(tag, forKey: .tag)
-        let contents = contents.map { $0.format() }
         try container.encode(contents, forKey: .contents)
     }
 }
@@ -214,7 +204,6 @@ extension ParametersSection: Encodable {
 extension ReturnsSection: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        let contents = content.map { $0.format() }
-        try container.encode(contents)
+        try container.encode(content)
     }
 }

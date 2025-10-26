@@ -9,11 +9,11 @@ public import Markdown
 /// Documentation about a symbol's potential errors.
 public struct Throw {
     /// The content that describe potential errors for a symbol.
-    public var contents: [any Markup]
+    public var contents: [String]
 
     /// Initialize a value to describe documentation about a symbol's potential errors.
     /// - Parameter contents: The content that describe potential errors for this symbol.
     public init(contents: [any Markup]) {
-        self.contents = contents
+        self.contents = contents.map { $0.format() }
     }
 }

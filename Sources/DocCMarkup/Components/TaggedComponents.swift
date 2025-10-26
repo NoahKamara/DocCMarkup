@@ -171,7 +171,7 @@ public struct TaggedComponents: MarkupRewriter {
             if self.httpBody == nil {
                 self.httpBody = HTTPBody(mediaType: nil, contents: extractedTag.contents)
             } else {
-                self.httpBody?.contents = extractedTag.contents
+                self.httpBody?.contents = extractedTag.contents.map({ $0.format() })
             }
 
         case .httpParameter(let name):

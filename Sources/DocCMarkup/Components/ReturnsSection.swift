@@ -8,5 +8,5 @@ public import Markdown
 
 /// A section that contains return value information for a function.
 public struct ReturnsSection {
-    public var content: [any Markup]
+    public var content: [String]
 }

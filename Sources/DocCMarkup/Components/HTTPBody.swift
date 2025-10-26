@@ -26,7 +26,7 @@ public struct HTTPBody {
     /// The parameters passed in the body when the body is a multipart or url-encoded form.
     public var parameters: [HTTPParameter]
     /// The content that describe the body.
-    public var contents: [any Markup]
+    public var contents: [String]
     /// The symbol graph symbol representing this body.
     public var symbol: SymbolGraph.Symbol?
 
@@ -44,7 +44,7 @@ public struct HTTPBody {
         symbol: SymbolGraph.Symbol? = nil
     ) {
         self.mediaType = mediaType
-        self.contents = contents
+        self.contents = contents.map { $0.format() }
         self.parameters = parameters
         self.symbol = symbol
     }

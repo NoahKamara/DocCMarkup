@@ -11,7 +11,7 @@ public struct Parameter {
     /// The name of the parameter.
     public var name: String
     /// The content that describe the parameter.
-    public var contents: [any Markup]
+    public var contents: [String]
     /// The text range where the parameter name was parsed.
     var nameRange: SourceRange?
     /// The text range where this parameter was parsed.
@@ -36,7 +36,7 @@ public struct Parameter {
     ) {
         self.name = name
         self.nameRange = nameRange
-        self.contents = contents
+        self.contents = contents.map { $0.format() }
         self.range = range
         self.isStandalone = isStandalone
     }
@@ -48,7 +48,7 @@ public struct Parameter {
     public init(_ doxygenParameter: DoxygenParameter) {
         self.name = doxygenParameter.name
         self.nameRange = nil
-        self.contents = Array(doxygenParameter.children)
+        self.contents = Array(doxygenParameter.children).map { $0.format() }
         self.range = doxygenParameter.range
         self.isStandalone = true // Each Doxygen parameter has a `\param` command.
     }

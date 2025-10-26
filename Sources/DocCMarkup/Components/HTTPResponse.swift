@@ -18,7 +18,7 @@ public struct HTTPResponse {
     /// Value might be undefined initially when first extracted from markdown.
     public var mediaType: String?
     /// The content that describe the response.
-    public var contents: [any Markup]
+    public var contents: [String]
     /// The symbol graph symbol representing this response.
     public var symbol: SymbolGraph.Symbol?
 
@@ -39,7 +39,7 @@ public struct HTTPResponse {
         self.statusCode = statusCode
         self.reason = reason
         self.mediaType = mediaType
-        self.contents = contents
+        self.contents = contents.map { $0.format() }
         self.symbol = symbol
     }
 }
