@@ -75,3 +75,18 @@ swift test
 ```
 
 
+### ToDos
+
+- HTTP parsing improvements
+  - HTTPResponse parsing: Parse status code and reason from tags like `- HTTPResponse 200 OK:`; set `statusCode: UInt?` (nil if non-numeric) and `reason` when present; skip entry when neither parse is meaningful.
+  - HTTPParameter parsing: Recognize simple source hints like `query`, `path`, `header` and required markers like `(required)`; populate `source` and `required` heuristically when present; otherwise leave `nil`/`false`.
+
+- Conformances and access control polish
+  - Add `Sendable` to public value types where feasible (`AbstractSection`, `DiscussionSection`, `Parameter`, `ParametersSection`, `Return`, `ReturnsSection`, `Throw`, `HTTPBody`, `HTTPParameter`, `HTTPResponse`, `TaggedComponents`).
+  - Ensure public initializers/properties have intended visibility; avoid exposing mutation where not needed.
+
+- Package hygiene
+  - Pin dependency versions (avoid `branch: "main"` for `swift-markdown` and `swift-docc-symbolkit`).
+  - Remove macro target fully; delete/ignore `Sources/DocCMarkupMacros/*` (no macros in this package).
+  - Leave `VyperTests` as-is locally (not committed) — no package changes needed.
+
