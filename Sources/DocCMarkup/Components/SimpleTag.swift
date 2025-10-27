@@ -10,7 +10,7 @@ public import Markdown
 ///
 /// Write a documentation tag by prepending a line of prose with something like a "- seeAlso:" or "-
 /// todo:".
-public struct SimpleTag {
+public struct SimpleTag: Codable {
     /// The name of the tag.
     public var tag: String
 
@@ -25,5 +25,15 @@ public struct SimpleTag {
     public init(tag: String, contents: [any Markup]) {
         self.tag = tag
         self.contents = contents.map { $0.format() }
+    }
+
+    /// Creates a new tagged piece of documentation from the given name and content.
+    ///
+    /// - Parameters:
+    ///   - tag: The name of the tag.
+    ///   - contents: The tagged content.
+    public init(tag: String, contents: [String]) {
+        self.tag = tag
+        self.contents = contents
     }
 }

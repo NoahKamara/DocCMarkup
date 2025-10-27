@@ -6,26 +6,23 @@
 
 public import Markdown
 
+/// A section that contains a function's parameters.
+public struct ParametersSection {
+    /// The list of function parameters.
+    public let parameters: [Parameter]
+}
+
 /// Documentation about a parameter for a symbol.
-public struct Parameter {
+public struct Parameter: Codable {
     /// The name of the parameter.
     public var name: String
     /// The content that describe the parameter.
     public var contents: [String]
-    /// The text range where the parameter name was parsed.
-    var nameRange: SourceRange?
-    /// The text range where this parameter was parsed.
-    var range: SourceRange?
-    /// Whether the parameter is documented standalone or as a member of a parameters outline.
-    var isStandalone: Bool
 
     /// Initialize a value to describe documentation about a parameter for a symbol.
     /// - Parameters:
     ///   - name: The name of this parameter.
     ///   - contents: The content that describe this parameter.
-    ///   - nameRange: The text range where the parameter name was parsed.
-    ///   - range: The text range where this parameter was parsed.
-    ///   - isStandalone: Whether the parameter is documented standalone or as a member of a
     /// parameters outline.
     public init(
         name: String,
@@ -35,10 +32,7 @@ public struct Parameter {
         isStandalone: Bool = false
     ) {
         self.name = name
-        self.nameRange = nameRange
         self.contents = contents.map { $0.format() }
-        self.range = range
-        self.isStandalone = isStandalone
     }
 
     /// Initialize a value to describe documentation about a symbol's parameter via a Doxygen
@@ -47,9 +41,6 @@ public struct Parameter {
     /// - Parameter doxygenParameter: A parsed Doxygen `\param` command.
     public init(_ doxygenParameter: DoxygenParameter) {
         self.name = doxygenParameter.name
-        self.nameRange = nil
         self.contents = Array(doxygenParameter.children).map { $0.format() }
-        self.range = doxygenParameter.range
-        self.isStandalone = true // Each Doxygen parameter has a `\param` command.
     }
 }

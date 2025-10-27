@@ -18,7 +18,7 @@ public import Markdown
 public import SymbolKit
 
 /// Documentation about the payload body of an HTTP request.
-public struct HTTPBody {
+public struct HTTPBody: Codable {
     /// The media type of the body.
     ///
     /// Value might be undefined initially when first extracted from markdown.

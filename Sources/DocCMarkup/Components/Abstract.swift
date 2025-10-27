@@ -14,4 +14,20 @@ public struct AbstractSection {
     public init(paragraph: Paragraph) {
         self.content = paragraph.children.compactMap(\.detachedFromParent).map { $0.format() }
     }
+
+    public init(content: [String]) {
+        self.content = content
+    }
+}
+
+extension AbstractSection: Codable {
+    public func encode(to encoder: any Encoder) throws {
+        try content.encode(to: encoder)
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let content = try container.decode([String].self)
+        self.init(content: content)
+    }
 }

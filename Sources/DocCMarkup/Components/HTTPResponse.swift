@@ -8,7 +8,7 @@ public import Markdown
 public import SymbolKit
 
 /// Documentation about the response for an HTTP request symbol.
-public struct HTTPResponse {
+public struct HTTPResponse: Codable {
     /// The HTTP status code of the response.
     public var statusCode: UInt
     /// The HTTP code description string.

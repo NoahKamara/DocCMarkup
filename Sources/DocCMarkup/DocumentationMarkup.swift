@@ -64,87 +64,16 @@ public struct DocumentationMarkup {
     ///   - markup: The source markup.
     ///   - upToSection: Documentation past this section will be ignored.
     public init(markup: any Markup, upToSection lastSection: ParseSection = .end) {
-        // The current documentation section being parsed.
-        var currentSection = ParseSection.abstract
-
-        // Tracking the start index of discussion section.
-        var discussionIndex: Int?
-
-        // Index all headings as a lookup during parsing the content
-        for pair in markup.children.enumerated() {
-            // If we've parsed the last section we're interested in, skip through the rest
-            guard currentSection <= lastSection || currentSection == .end else { continue }
-
-            let (index, child) = pair
-            let isLastChild = index == (markup.childCount - 1)
-
-            // Already parsed all expected content, return.
-            guard currentSection != .end else { continue }
-
-            // Parse an abstract, if found
-            if currentSection == .abstract {
-                if self.abstractSection == nil, let firstParagraph = child as? Paragraph {
-                    self.abstractSection = AbstractSection(paragraph: firstParagraph)
-                    continue
-                } else if child is BlockDirective {
-                    currentSection = .discussion
-                } else if let _ = child as? HTMLBlock {
-                    // Skip HTMLBlock comment.
-                    continue
-                } else {
-                    // Only directives and a single paragraph allowed in an abstract,
-                    // advance to a discussion section.
-                    currentSection = .discussion
-                }
-            }
-
-            // Parse content into a discussion section and assorted tags
-            let parseDiscussion: ([any Markup]) -> (
-                discussion: DiscussionSection,
-                tags: TaggedComponents
-            ) = { children in
-                // Extract tags
-                var extractor = TaggedComponents()
-                let content: [any Markup] = if let remainder = extractor
-                    .visit(markup.withUncheckedChildren(children))
-                {
-                    Array(remainder.children)
-                } else {
-                    []
-                }
-
-                return (
-                    discussion: DiscussionSection(content: content),
-                    tags: extractor
-                )
-            }
-
-            // Parse a discussion, if found
-            if currentSection == .discussion {
-                // Discussion content starts at this index
-                if discussionIndex == nil {
-                    discussionIndex = index
-                }
-
-                guard let discussionIndex else { continue }
-
-                // If at end of content, parse discussion
-                if isLastChild {
-                    let (
-                        discussion,
-                        tags
-                    ) = parseDiscussion(markup.children(at: discussionIndex...index))
-                    self.discussionSection = discussion
-                    self.tags = tags
-                }
-            }
-        }
+        let result = DocumentationMarkupParser().parse(markup: markup, upToSection: lastSection)
+        self.abstractSection = result.abstractSection
+        self.discussionSection = result.discussionSection
+        self.tags = result.tags
     }
 }
 
 // MARK: - Convenience Markup extensions
 
-private extension Markup {
+extension Markup {
     /// Returns a sub-sequence of the children sequence.
     /// - Parameter range: A closed range.
     /// - Returns: A children sub-sequence.

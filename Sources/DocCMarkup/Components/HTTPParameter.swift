@@ -8,7 +8,7 @@ public import Markdown
 public import SymbolKit
 
 /// Documentation about a parameter for an HTTP request.
-public struct HTTPParameter {
+public struct HTTPParameter: Codable {
     /// The name of the parameter.
     public var name: String
     /// The source of the parameter, such as "query" or "path".

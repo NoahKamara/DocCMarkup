@@ -18,7 +18,7 @@ struct ParsingTests {
         assertInlineSnapshot(of: DocumentationMarkup(trivia: trivia), as: .json) {
             """
             {
-              "abstractSection" : [
+              "abstract" : [
                 "Lorem ipsum dolor sit amet."
               ]
             }
@@ -40,7 +40,7 @@ struct ParsingTests {
         assertInlineSnapshot(of: DocumentationMarkup(trivia: trivia), as: .json) {
             """
             {
-              "abstractSection" : [
+              "abstract" : [
                 "Lorem ipsum dolor sit amet."
               ]
             }
@@ -59,7 +59,7 @@ struct ParsingTests {
         assertInlineSnapshot(of: markup, as: .json) {
             """
             {
-              "abstractSection" : [
+              "abstract" : [
                 "Lorem ipsum dolor sit amet."
               ]
             }
@@ -80,15 +80,12 @@ struct ParsingTests {
         assertInlineSnapshot(of: markup, as: .json) {
             """
             {
-              "abstractSection" : [
+              "abstract" : [
                 "Lorem ipsum dolor sit amet."
               ],
-              "discussionSection" : [
+              "discussion" : [
                 "Some Discussion"
-              ],
-              "tags" : {
-
-              }
+              ]
             }
             """
         }
@@ -107,27 +104,20 @@ struct ParsingTests {
         assertInlineSnapshot(of: markup, as: .json) {
             """
             {
-              "discussionSection" : [
-
-              ],
-              "tags" : {
-                "parameters" : [
-                  {
-                    "contents" : [
-                      "foo parameter."
-                    ],
-                    "isStandalone" : false,
-                    "name" : "foo"
-                  },
-                  {
-                    "contents" : [
-                      "bar parameter."
-                    ],
-                    "isStandalone" : false,
-                    "name" : "bar"
-                  }
-                ]
-              }
+              "parameters" : [
+                {
+                  "contents" : [
+                    "foo parameter."
+                  ],
+                  "name" : "foo"
+                },
+                {
+                  "contents" : [
+                    "bar parameter."
+                  ],
+                  "name" : "bar"
+                }
+              ]
             }
             """
         }
@@ -144,20 +134,14 @@ struct ParsingTests {
         assertInlineSnapshot(of: documentation, as: .json) {
             """
             {
-              "discussionSection" : [
-
-              ],
-              "tags" : {
-                "parameters" : [
-                  {
-                    "contents" : [
-                      "a parameter name"
-                    ],
-                    "isStandalone" : true,
-                    "name" : "parameterName"
-                  }
-                ]
-              }
+              "parameters" : [
+                {
+                  "contents" : [
+                    "a parameter name"
+                  ],
+                  "name" : "parameterName"
+                }
+              ]
             }
             """
         }
@@ -176,30 +160,23 @@ struct ParsingTests {
         assertInlineSnapshot(of: documentation, as: .json) {
             """
             {
-              "abstractSection" : [
+              "abstract" : [
                 "Lorem ipsum dolor sit amet."
               ],
-              "discussionSection" : [
-
-              ],
-              "tags" : {
-                "parameters" : [
-                  {
-                    "contents" : [
-                      "describing bar parameter"
-                    ],
-                    "isStandalone" : true,
-                    "name" : "bar"
-                  },
-                  {
-                    "contents" : [
-                      "describing baz parameter"
-                    ],
-                    "isStandalone" : true,
-                    "name" : "baz"
-                  }
-                ]
-              }
+              "parameters" : [
+                {
+                  "contents" : [
+                    "describing bar parameter"
+                  ],
+                  "name" : "bar"
+                },
+                {
+                  "contents" : [
+                    "describing baz parameter"
+                  ],
+                  "name" : "baz"
+                }
+              ]
             }
             """
         }
@@ -217,16 +194,11 @@ struct ParsingTests {
         assertInlineSnapshot(of: documentation, as: .json) {
             """
             {
-              "discussionSection" : [
-
-              ],
-              "tags" : {
-                "throws" : [
-                  [
-                    "some error"
-                  ]
+              "throws" : [
+                [
+                  "some error"
                 ]
-              }
+              ]
             }
             """
         }
@@ -245,19 +217,14 @@ struct ParsingTests {
         assertInlineSnapshot(of: documentation, as: .json) {
             """
             {
-              "discussionSection" : [
-
-              ],
-              "tags" : {
-                "throws" : [
-                  [
-                    "some error"
-                  ],
-                  [
-                    "some other error"
-                  ]
+              "throws" : [
+                [
+                  "some error"
+                ],
+                [
+                  "some other error"
                 ]
-              }
+              ]
             }
             """
         }
@@ -274,16 +241,11 @@ struct ParsingTests {
         assertInlineSnapshot(of: documentation, as: .json) {
             """
             {
-              "discussionSection" : [
-
-              ],
-              "tags" : {
-                "returns" : [
-                  [
-                    "some return type"
-                  ]
+              "returns" : [
+                [
+                  "some return type"
                 ]
-              }
+              ]
             }
             """
         }
@@ -302,21 +264,61 @@ struct ParsingTests {
         assertInlineSnapshot(of: documentation, as: .json) {
             #"""
             {
-              "discussionSection" : [
-
-              ],
-              "tags" : {
-                "returns" : [
-                  [
-                    "some return type\nsome more text?"
-                  ],
-                  [
-                    "some other return type"
-                  ]
+              "returns" : [
+                [
+                  "some return type\nsome more text?"
+                ],
+                [
+                  "some other return type"
                 ]
-              }
+              ]
             }
             """#
+        }
+    }
+
+    @Test
+    func fullExample() async throws {
+        let markup = DocumentationMarkup(parsing: """
+        /// does something with foo and bar
+        /// - Parameter foo: The foo parameter
+        /// - Parameter bar: The bar parameter
+        /// - Returns: The foobar result
+        /// - Throws: An error if the foo couldn't bar
+        """)
+
+        assertInlineSnapshot(of: markup, as: .json) {
+            """
+            {
+              "abstract" : [
+                "does something with foo and bar"
+              ],
+              "parameters" : [
+                {
+                  "contents" : [
+                    "The foo parameter"
+                  ],
+                  "name" : "foo"
+                },
+                {
+                  "contents" : [
+                    "The bar parameter"
+                  ],
+                  "name" : "bar"
+                }
+              ],
+              "returns" : [
+                [
+                  "The foobar result"
+                ]
+              ],
+              "throws" : [
+                [
+                  "An error if the foo couldn’t bar"
+                ]
+              ]
+            }
+            """
         }
     }
 }

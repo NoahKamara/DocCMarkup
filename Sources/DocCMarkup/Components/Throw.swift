@@ -16,4 +16,20 @@ public struct Throw {
     public init(contents: [any Markup]) {
         self.contents = contents.map { $0.format() }
     }
+
+    init(contents: [String]) {
+        self.contents = contents
+    }
+}
+
+extension Throw: Codable {
+    public func encode(to encoder: any Encoder) throws {
+        try contents.encode(to: encoder)
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let content = try container.decode([String].self)
+        self.init(contents: content)
+    }
 }

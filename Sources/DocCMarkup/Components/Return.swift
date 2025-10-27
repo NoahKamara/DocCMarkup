@@ -6,12 +6,15 @@
 
 public import Markdown
 
+/// A section that contains return value information for a function.
+public struct ReturnsSection {
+    public var content: [String]
+}
+
 /// Documentation about a symbol's return value.
 public struct Return {
     /// The content that describe the return value for a symbol.
     public var contents: [String]
-    /// The text range where this return value was parsed.
-    var range: SourceRange?
 
     /// Initialize a value to describe documentation about a symbol's return value.
     /// - Parameters:
@@ -19,7 +22,6 @@ public struct Return {
     ///   - range: The text range where this return value was parsed.
     public init(contents: [any Markup], range: SourceRange? = nil) {
         self.contents = contents.map { $0.format() }
-        self.range = range
     }
 
     /// Initialize a value to describe documentation about a symbol's return value.
@@ -27,10 +29,25 @@ public struct Return {
     /// - Parameter doxygenReturns: A parsed Doxygen `\returns` command.
     public init(_ doxygenReturns: DoxygenReturns) {
         self.contents = Array(doxygenReturns.children).map { $0.format() }
-        self.range = doxygenReturns.range
     }
 
     public func format() -> String {
         self.contents.joined()
+    }
+
+    init(contents: [String]) {
+        self.contents = contents
+    }
+}
+
+extension Return: Codable {
+    public func encode(to encoder: any Encoder) throws {
+        try contents.encode(to: encoder)
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let content = try container.decode([String].self)
+        self.init(contents: content)
     }
 }
