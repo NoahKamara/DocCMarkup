@@ -25,7 +25,7 @@ public struct DiscussionSection {
 
 extension DiscussionSection: Codable {
     public func encode(to encoder: any Encoder) throws {
-        try content.encode(to: encoder)
+        try self.content.encode(to: encoder)
     }
 
     public init(from decoder: any Decoder) throws {

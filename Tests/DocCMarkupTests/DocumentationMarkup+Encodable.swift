@@ -1,3 +1,9 @@
+//
+//  DocumentationMarkup+Encodable.swift
+//
+//  Copyright © 2024 Noah Kamara.
+//
+
 ////
 ////  DocumentationMarkup+Encodable.swift
 ////
@@ -10,18 +16,18 @@
 ////  Copyright © 2024 Noah Kamara.
 ////
 //
-//import Foundation
+// import Foundation
 //
-//@testable import DocCMarkup
+// @testable import DocCMarkup
 //
 //// import Markdown
-//import SymbolKit
+// import SymbolKit
 //
 //// MARK: - AbstractSection
 //
 //// MARK: - TaggedComponents
 //
-//extension TaggedComponents: Encodable {
+// extension TaggedComponents: Encodable {
 //    private enum CodingKeys: String, CodingKey {
 //        case parameters
 //        case httpResponses
@@ -43,17 +49,17 @@
 //        try container.encodeIfNotEmpty(`throws`, forKey: .throws)
 //        try container.encodeIfNotEmpty(otherTags, forKey: .otherTags)
 //    }
-//}
+// }
 //
-//extension KeyedEncodingContainerProtocol {
+// extension KeyedEncodingContainerProtocol {
 //    mutating func encodeIfNotEmpty(_ value: [some Encodable], forKey key: Key) throws {
 //        if !value.isEmpty {
 //            try encode(value, forKey: key)
 //        }
 //    }
-//}
+// }
 //
-//extension Parameter: Encodable {
+// extension Parameter: Encodable {
 //    private enum CodingKeys: String, CodingKey {
 //        case name
 //        case contents
@@ -72,17 +78,17 @@
 //        // try container.encodeIfPresent(range, forKey: .range)
 //        try container.encode(isStandalone, forKey: .isStandalone)
 //    }
-//}
+// }
 //
 //
-//extension Throw: Encodable {
+// extension Throw: Encodable {
 //    public func encode(to encoder: Encoder) throws {
 //        var container = encoder.singleValueContainer()
 //        try container.encode(contents)
 //    }
-//}
+// }
 //
-//extension HTTPBody: Encodable {
+// extension HTTPBody: Encodable {
 //    private enum CodingKeys: String, CodingKey {
 //        case mediaType
 //        case parameters
@@ -99,9 +105,9 @@
 //        // Note: SymbolGraph.Symbol is not Codable, so we skip encoding this property
 //        // try container.encodeIfPresent(symbol, forKey: .symbol)
 //    }
-//}
+// }
 //
-//extension HTTPParameter: Encodable {
+// extension HTTPParameter: Encodable {
 //    private enum CodingKeys: String, CodingKey {
 //        case name
 //        case source
@@ -120,9 +126,9 @@
 //        // try container.encodeIfPresent(symbol, forKey: .symbol)
 //        try container.encode(required, forKey: .required)
 //    }
-//}
+// }
 //
-//extension HTTPResponse: Encodable {
+// extension HTTPResponse: Encodable {
 //    private enum CodingKeys: String, CodingKey {
 //        case statusCode
 //        case reason
@@ -141,19 +147,19 @@
 //        // Note: SymbolGraph.Symbol is not Codable, so we skip encoding this property
 //        try container.encodeIfPresent(symbol?.kind.identifier.identifier, forKey: .symbol)
 //    }
-//}
+// }
 //
 //
-//extension ParametersSection: Encodable {
+// extension ParametersSection: Encodable {
 //    public func encode(to encoder: Encoder) throws {
 //        var container = encoder.singleValueContainer()
 //        try container.encode(parameters)
 //    }
-//}
+// }
 //
-//extension ReturnsSection: Encodable {
+// extension ReturnsSection: Encodable {
 //    public func encode(to encoder: Encoder) throws {
 //        var container = encoder.singleValueContainer()
 //        try container.encode(content)
 //    }
-//}
+// }

@@ -42,7 +42,7 @@ public struct Return {
 
 extension Return: Codable {
     public func encode(to encoder: any Encoder) throws {
-        try contents.encode(to: encoder)
+        try self.contents.encode(to: encoder)
     }
 
     public init(from decoder: any Decoder) throws {

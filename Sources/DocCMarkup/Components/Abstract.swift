@@ -18,11 +18,15 @@ public struct AbstractSection {
     public init(content: [String]) {
         self.content = content
     }
+
+    public func format() -> String {
+        self.content.joined(separator: "\n")
+    }
 }
 
 extension AbstractSection: Codable {
     public func encode(to encoder: any Encoder) throws {
-        try content.encode(to: encoder)
+        try self.content.encode(to: encoder)
     }
 
     public init(from decoder: any Decoder) throws {
